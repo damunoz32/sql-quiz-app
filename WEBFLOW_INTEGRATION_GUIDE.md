@@ -531,25 +531,31 @@ The app is already responsive, but you can adjust the iframe height:
   setResponsiveHeight();
   window.addEventListener('resize', setResponsiveHeight);
   
-  // Enhanced loading animation
+  // Optional: Dynamic height adjustment based on content
+  // This works if the iframe content is from the same domain
   iframe.onload = function() {
-    iframe.style.opacity = '1';
-    iframe.style.transform = 'scale(1)';
+    try {
+      // Try to get the actual content height
+      const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+      if (contentHeight > 0) {
+        // Add some buffer space
+        const newHeight = Math.max(contentHeight + 50, parseInt(iframe.style.height));
+        iframe.style.height = newHeight + 'px';
+      }
+    } catch(e) {
+      // Cross-origin restrictions - fall back to responsive heights
+      console.log('Using responsive height fallback');
+    }
   };
-  
-  // Initial loading state
-  iframe.style.opacity = '0.9';
-  iframe.style.transform = 'scale(0.98)';
-  iframe.style.transition = 'all 0.4s ease';
 })();
 </script>
 
 ## 🎨 **Professional MVP Embed**
 
-### **Clean, Functional SQL Quiz Embed**
+### **Clean, Functional SQL Quiz Embed - Full Height**
 
 ```html
-<!-- Professional SQL Quiz App Embed -->
+<!-- Professional SQL Quiz App Embed - Full Height -->
 <div class="sql-quiz-mvp-wrapper">
   <div class="sql-quiz-mvp-container">
     <div class="sql-quiz-header">
@@ -562,7 +568,7 @@ The app is already responsive, but you can adjust the iframe height:
         id="sql-quiz-mvp-iframe"
         src="https://damunoz32.github.io/sql-quiz-app" 
         width="100%" 
-        height="500px" 
+        height="100%" 
         frameborder="0" 
         scrolling="auto"
         title="SQL Quiz Master"
@@ -578,6 +584,9 @@ The app is already responsive, but you can adjust the iframe height:
   border-radius: 12px;
   margin: 20px 0;
   border: 1px solid #e9ecef;
+  height: calc(100vh - 200px); /* Full viewport height minus space for header/footer */
+  min-height: 600px; /* Minimum height to ensure usability */
+  max-height: 800px; /* Maximum height to prevent excessive expansion */
 }
 
 .sql-quiz-mvp-container {
@@ -585,6 +594,9 @@ The app is already responsive, but you can adjust the iframe height:
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .sql-quiz-header {
@@ -592,6 +604,7 @@ The app is already responsive, but you can adjust the iframe height:
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 1px solid #e9ecef;
+  flex-shrink: 0; /* Don't shrink the header */
 }
 
 .sql-quiz-header h3 {
@@ -613,27 +626,30 @@ The app is already responsive, but you can adjust the iframe height:
   border-radius: 6px;
   overflow: hidden;
   border: 1px solid #e9ecef;
+  flex: 1; /* Take up remaining space */
+  min-height: 0; /* Allow container to shrink */
 }
 
 #sql-quiz-mvp-iframe {
   border: none;
   background: white;
   display: block;
+  width: 100%;
+  height: 100%;
 }
 
-/* Responsive Design - MVP */
+/* Responsive Design - Full Height MVP */
 @media (max-width: 1024px) {
   .sql-quiz-mvp-wrapper {
     padding: 15px;
     margin: 15px 0;
+    height: calc(100vh - 180px);
+    min-height: 550px;
+    max-height: 750px;
   }
   
   .sql-quiz-mvp-container {
     padding: 15px;
-  }
-  
-  #sql-quiz-mvp-iframe {
-    height: 450px !important;
   }
 }
 
@@ -641,14 +657,13 @@ The app is already responsive, but you can adjust the iframe height:
   .sql-quiz-mvp-wrapper {
     padding: 10px;
     margin: 10px 0;
+    height: calc(100vh - 160px);
+    min-height: 500px;
+    max-height: 700px;
   }
   
   .sql-quiz-mvp-container {
     padding: 12px;
-  }
-  
-  #sql-quiz-mvp-iframe {
-    height: 400px !important;
   }
   
   .sql-quiz-header h3 {
@@ -659,78 +674,98 @@ The app is already responsive, but you can adjust the iframe height:
 @media (max-width: 480px) {
   .sql-quiz-mvp-wrapper {
     padding: 8px;
+    height: calc(100vh - 140px);
+    min-height: 450px;
+    max-height: 650px;
   }
   
   .sql-quiz-mvp-container {
     padding: 10px;
   }
   
-  #sql-quiz-mvp-iframe {
-    height: 350px !important;
-  }
-  
   .sql-quiz-header h3 {
     font-size: 16px;
+  }
+}
+
+/* Ensure the wrapper doesn't exceed viewport */
+@media (max-height: 600px) {
+  .sql-quiz-mvp-wrapper {
+    height: calc(100vh - 120px);
+    min-height: 400px;
+    max-height: 500px;
   }
 }
 </style>
 
 <script>
-// Simple responsive iframe management - MVP
+// Full height responsive iframe management - MVP
 (function() {
   const iframe = document.getElementById('sql-quiz-mvp-iframe');
+  const wrapper = document.querySelector('.sql-quiz-mvp-wrapper');
   
   function setResponsiveHeight() {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     
-    // Conservative height calculation to prevent overlap
-    const safeHeight = viewportHeight - 400; // Reserve space for all page elements
+    // Calculate available height (reserve space for page elements)
+    const reservedSpace = 200; // Space for header, footer, navigation
+    const availableHeight = viewportHeight - reservedSpace;
     
+    // Set wrapper height based on viewport
     if (viewportWidth <= 480px) {
-      iframe.style.height = Math.min(350, safeHeight) + 'px';
+      wrapper.style.height = Math.min(Math.max(availableHeight, 450), 650) + 'px';
     } else if (viewportWidth <= 768) {
-      iframe.style.height = Math.min(400, safeHeight) + 'px';
+      wrapper.style.height = Math.min(Math.max(availableHeight, 500), 700) + 'px';
     } else if (viewportWidth <= 1024) {
-      iframe.style.height = Math.min(450, safeHeight) + 'px';
+      wrapper.style.height = Math.min(Math.max(availableHeight, 550), 750) + 'px';
     } else {
-      iframe.style.height = Math.min(500, safeHeight) + 'px';
+      wrapper.style.height = Math.min(Math.max(availableHeight, 600), 800) + 'px';
     }
   }
   
   setResponsiveHeight();
   window.addEventListener('resize', setResponsiveHeight);
+  
+  // Ensure iframe loads properly
+  iframe.onload = function() {
+    iframe.style.opacity = '1';
+  };
+  
+  // Initial loading state
+  iframe.style.opacity = '0.9';
+  iframe.style.transition = 'opacity 0.3s ease';
 })();
 </script>
 
 ## 🎯 **Key Features:**
 
-✅ **Clean, professional design** - no fancy effects  
-✅ **Perfect fit** - no scrolling required  
-✅ **No footer overlap** - conservative height management  
-✅ **Full app functionality** within allocated space  
-✅ **Responsive design** that works on all devices  
-✅ **Simple and focused** on functionality  
-✅ **Matches your website's aesthetic**  
+✅ **Full height utilization** - takes up available viewport space  
+✅ **No scrolling required** - entire app visible at once  
+✅ **No footer overlap** - smart height calculation  
+✅ **Full app functionality** - complete access to all features  
+✅ **Responsive design** - adapts to all screen sizes  
+✅ **Clean, professional design** - matches your website aesthetic  
+✅ **Flexible layout** - uses flexbox for optimal space usage  
 
 ## 🚀 **Implementation:**
 
-1. **Copy the MVP code above**
+1. **Copy the full height MVP code above**
 2. **Replace your current embed** in Webflow
-3. **Test that it fits perfectly** without scrolling
+3. **Test that it uses full available height**
 4. **Verify no footer overlap**
-5. **Publish and enjoy** your functional SQL quiz!
+5. **Publish and enjoy** your full-height SQL quiz!
 
 ## 🎨 **Design Philosophy:**
 
-- **Minimal and clean** - focuses on functionality
+- **Full height utilization** - makes use of all available space
+- **Flexible layout** - uses flexbox for optimal space distribution
+- **Smart height calculation** - adapts to viewport while preventing overlap
 - **Professional appearance** that matches your site
-- **Conservative spacing** to prevent layout issues
-- **Simple color scheme** (light gray background, white container)
 - **Clean typography** using your site's fonts
 - **Subtle shadows** for depth without being distracting
 
-This MVP version prioritizes functionality and proper page integration over visual effects, ensuring your SQL quiz works perfectly on your Webflow page.
+This full-height version will make your SQL quiz take up the maximum available space while still preventing any footer overlap issues.
 
 ## 🎯 **Quick Enhancement Tips**
 
