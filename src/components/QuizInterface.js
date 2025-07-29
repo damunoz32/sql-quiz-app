@@ -274,7 +274,7 @@ const Timer = styled.div`
 `;
 
 // QuizInterface component
-function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
+function QuizInterface({ quizData, updateQuizProgress, onComplete, onContentChange }) {
   // State management for the quiz
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -348,6 +348,11 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
     }
     
     setShowAnswer(true);
+    
+    // Trigger height update
+    if (onContentChange) {
+      setTimeout(onContentChange, 100);
+    }
   };
 
   // Handle next question
@@ -356,6 +361,11 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
       setShowAnswer(false);
+      
+      // Trigger height update
+      if (onContentChange) {
+        setTimeout(onContentChange, 100);
+      }
     } else {
       // Quiz completed
       setIsQuizComplete(true);
@@ -365,6 +375,11 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
         currentQuestion: currentQuestionIndex
       });
       onComplete();
+      
+      // Trigger height update
+      if (onContentChange) {
+        setTimeout(onContentChange, 100);
+      }
     }
   };
 

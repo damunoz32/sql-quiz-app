@@ -68,6 +68,43 @@ function App() {
     setCurrentView('quiz');
   };
 
+  // Function to send height to parent iframe
+  const sendHeightToParent = () => {
+    try {
+      const height = document.body.scrollHeight;
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'RESIZE',
+          height: height
+        }, '*');
+        console.log('Sent height to parent:', height);
+      }
+    } catch (error) {
+      console.log('Error sending height to parent:', error);
+    }
+  };
+
+  // Send height on mount and when content changes
+  React.useEffect(() => {
+    // Initial height
+    sendHeightToParent();
+    
+    // Send height after a short delay to ensure content is rendered
+    const timer = setTimeout(sendHeightToParent, 500);
+    
+    // Send height when window resizes
+    const handleResize = () => {
+      setTimeout(sendHeightToParent, 100);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   // Render the appropriate component based on current view
   const renderCurrentView = () => {
     switch (currentView) {

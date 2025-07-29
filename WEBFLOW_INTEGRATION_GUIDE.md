@@ -738,34 +738,231 @@ The app is already responsive, but you can adjust the iframe height:
 })();
 </script>
 
+## 🎨 **Dynamic Height Embed - Full App Interface**
+
+### **Auto-Sizing SQL Quiz Embed - No Constraints**
+
+```html
+<!-- Dynamic Height SQL Quiz App Embed -->
+<div class="sql-quiz-dynamic-wrapper">
+  <div class="sql-quiz-dynamic-container">
+    <div class="sql-quiz-header">
+      <h3>SQL Quiz Master</h3>
+      <p>Interactive database query practice</p>
+    </div>
+    
+    <div class="sql-quiz-iframe-container">
+      <iframe 
+        id="sql-quiz-dynamic-iframe"
+        src="https://damunoz32.github.io/sql-quiz-app" 
+        width="100%" 
+        height="800px" 
+        frameborder="0" 
+        scrolling="no"
+        title="SQL Quiz Master"
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+<style>
+.sql-quiz-dynamic-wrapper {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 20px 0;
+  border: 1px solid #e9ecef;
+}
+
+.sql-quiz-dynamic-container {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sql-quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.sql-quiz-header h3 {
+  color: #333;
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Jost', sans-serif;
+}
+
+.sql-quiz-header p {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+  font-family: 'Afacad Flux', sans-serif;
+}
+
+.sql-quiz-iframe-container {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+}
+
+#sql-quiz-dynamic-iframe {
+  border: none;
+  background: white;
+  display: block;
+  width: 100%;
+  transition: height 0.3s ease;
+}
+
+/* Responsive Design - Dynamic Height */
+@media (max-width: 1024px) {
+  .sql-quiz-dynamic-wrapper {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .sql-quiz-dynamic-container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sql-quiz-dynamic-wrapper {
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  .sql-quiz-dynamic-container {
+    padding: 12px;
+  }
+  
+  .sql-quiz-header h3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sql-quiz-dynamic-wrapper {
+    padding: 8px;
+  }
+  
+  .sql-quiz-dynamic-container {
+    padding: 10px;
+  }
+  
+  .sql-quiz-header h3 {
+    font-size: 16px;
+  }
+}
+</style>
+
+<script>
+// Dynamic iframe height management - Auto-size to content
+(function() {
+  const iframe = document.getElementById('sql-quiz-dynamic-iframe');
+  let resizeObserver;
+  let messageListener;
+  
+  function setIframeHeight(height) {
+    if (height && height > 0) {
+      // Add some buffer space for better appearance
+      const adjustedHeight = height + 50;
+      iframe.style.height = adjustedHeight + 'px';
+      console.log('Iframe height set to:', adjustedHeight + 'px');
+    }
+  }
+  
+  function handleMessage(event) {
+    // Only accept messages from our iframe
+    if (event.origin !== 'https://damunoz32.github.io') {
+      return;
+    }
+    
+    try {
+      const data = JSON.parse(event.data);
+      
+      if (data.type === 'RESIZE' && data.height) {
+        setIframeHeight(data.height);
+      }
+    } catch (e) {
+      console.log('Message parsing error:', e);
+    }
+  }
+  
+  function setupMessageListener() {
+    messageListener = handleMessage;
+    window.addEventListener('message', messageListener);
+  }
+  
+  function removeMessageListener() {
+    if (messageListener) {
+      window.removeEventListener('message', messageListener);
+    }
+  }
+  
+  // Initialize
+  setupMessageListener();
+  
+  // Fallback: Try to get height after iframe loads
+  iframe.onload = function() {
+    console.log('Iframe loaded, attempting to get content height...');
+    
+    // Wait a bit for content to fully render
+    setTimeout(() => {
+      try {
+        // Try to access iframe content (may fail due to CORS)
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const bodyHeight = iframeDoc.body.scrollHeight;
+        
+        if (bodyHeight > 0) {
+          setIframeHeight(bodyHeight);
+        } else {
+          // Fallback: Set a reasonable default height
+          setIframeHeight(600);
+        }
+      } catch (e) {
+        console.log('CORS restriction - using fallback height');
+        // CORS restriction - set a reasonable default
+        setIframeHeight(600);
+      }
+    }, 1000);
+  };
+  
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', removeMessageListener);
+})();
+</script>
+
 ## 🎯 **Key Features:**
 
-✅ **Full height utilization** - takes up available viewport space  
-✅ **No scrolling required** - entire app visible at once  
-✅ **No footer overlap** - smart height calculation  
-✅ **Full app functionality** - complete access to all features  
-✅ **Responsive design** - adapts to all screen sizes  
+✅ **Dynamic height adjustment** - iframe automatically sizes to content  
+✅ **No height constraints** - expands to show full app interface  
+✅ **No internal scrolling** - entire app visible at once  
+✅ **Message-based communication** - iframe can request height changes  
+✅ **Fallback sizing** - reasonable defaults if communication fails  
+✅ **Responsive design** - works on all screen sizes  
 ✅ **Clean, professional design** - matches your website aesthetic  
-✅ **Flexible layout** - uses flexbox for optimal space usage  
+
+## 🚀 **How It Works:**
+
+1. **Iframe loads** with initial height
+2. **App sends height message** to parent page
+3. **Parent adjusts iframe height** to match content
+4. **No scrolling needed** - full app interface visible
+5. **Fallback protection** - reasonable defaults if communication fails
 
 ## 🚀 **Implementation:**
 
-1. **Copy the full height MVP code above**
+1. **Copy the dynamic height code above**
 2. **Replace your current embed** in Webflow
-3. **Test that it uses full available height**
-4. **Verify no footer overlap**
-5. **Publish and enjoy** your full-height SQL quiz!
+3. **Test that iframe expands** to show full app
+4. **Verify no scrolling** is needed
+5. **Publish and enjoy** your fully visible SQL quiz!
 
-## 🎨 **Design Philosophy:**
-
-- **Full height utilization** - makes use of all available space
-- **Flexible layout** - uses flexbox for optimal space distribution
-- **Smart height calculation** - adapts to viewport while preventing overlap
-- **Professional appearance** that matches your site
-- **Clean typography** using your site's fonts
-- **Subtle shadows** for depth without being distracting
-
-This full-height version will make your SQL quiz take up the maximum available space while still preventing any footer overlap issues.
+This solution will make the iframe automatically size itself to show the complete app interface without any scrolling or height constraints.
 
 ## 🎯 **Quick Enhancement Tips**
 
