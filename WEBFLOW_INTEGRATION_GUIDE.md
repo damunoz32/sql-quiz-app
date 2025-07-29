@@ -570,7 +570,7 @@ The app is already responsive, but you can adjust the iframe height:
         width="100%" 
         height="100%" 
         frameborder="0" 
-        scrolling="auto"
+        scrolling="no"
         title="SQL Quiz Master"
       ></iframe>
     </div>

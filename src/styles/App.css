@@ -434,19 +434,20 @@ pre code {
   }
 }
 
-/* Full-height iframe optimizations */
+/* Full-height iframe optimizations - No internal scrolling */
 .AppContainer {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 8px;
+  overflow: hidden; /* Prevent any scrolling */
 }
 
 .MainContent {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden; /* Remove internal scrolling */
   padding: 8px;
 }
 
@@ -517,27 +518,75 @@ pre code {
   }
 }
 
-/* Ensure proper scrolling in iframe */
+/* Remove all scrollbars */
 html, body {
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-color) var(--background-primary);
+  overflow: hidden !important;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-/* Custom scrollbar for webkit browsers */
+/* Hide scrollbars completely */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--background-primary);
+/* Ensure no overflow anywhere */
+* {
+  box-sizing: border-box;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
+/* Make quiz components fit without scrolling */
+.QuizContainer {
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-color);
+.QuestionContainer {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.QuestionText {
+  flex-shrink: 0;
+  margin-bottom: 16px;
+}
+
+.OptionsContainer {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.OptionButton {
+  flex-shrink: 0;
+}
+
+/* Database viewer adjustments */
+.DatabaseViewer {
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.DatabaseViewerContent {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Results container */
+.ResultsContainer {
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
