@@ -1,0 +1,13 @@
+{
+  "short_name": "SQL Quiz Master",
+  "name": "SQL Quiz Master - Interactive SQL Learning",
+  "description": "Test your SQL skills with interactive questions and explore a sample database",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#667eea",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "categories": ["education", "productivity", "utilities"],
+  "lang": "en",
+  "dir": "ltr"
+}
