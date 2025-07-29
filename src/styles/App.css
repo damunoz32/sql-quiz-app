@@ -1,7 +1,7 @@
 /* App.css - Global Styles for SQL Quiz Application */
 
 /* Import Google Fonts for better typography */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* CSS Reset and Base Styles */
 * {
@@ -10,26 +10,73 @@
   box-sizing: border-box;
 }
 
-/* Root variables for consistent theming - MATCHING HOBBIES APP COLOR SCHEME */
+/* Root variables for consistent theming - MODERN WEB APP THEME */
 :root {
-  /* PRIMARY COLORS - Matched to dantemunoz.webflow.io */
-  --primary-color: #3B82F6; /* A vibrant blue from your site */
-  --primary-gradient: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
-  --secondary-color: #1E40AF; /* A darker, professional blue */
+  /* PRIMARY COLORS - Cyan/Teal/Purple/Blue Theme */
+  --primary-color: #06B6D4; /* Cyan */
+  --primary-light: #22D3EE;
+  --primary-dark: #0891B2;
+  --secondary-color: #8B5CF6; /* Purple */
+  --accent-color: #0EA5E9; /* Blue */
+  --teal-color: #14B8A6; /* Teal */
   
-  /* TEXT COLORS - Aligned with your site's typography */
-  --text-primary: #1F2937; /* Dark gray for main text */
-  --text-secondary: #6B7280; /* Lighter gray for secondary text */
+  /* GRADIENTS */
+  --primary-gradient: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+  --secondary-gradient: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  --accent-gradient: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+  --teal-gradient: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
+  --hero-gradient: linear-gradient(135deg, #06B6D4 0%, #8B5CF6 50%, #0EA5E9 100%);
+  
+  /* TEXT COLORS */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-light: #64748B;
+  --text-white: #FFFFFF;
   
   /* BACKGROUND COLORS */
-  --background-primary: #F7FAFC; /* A very light gray, almost white */
-  --border-color: rgba(59, 130, 246, 0.2); /* Soft blue for borders */
-
-  /* BORDER RADIUS - Match to your site's style */
-  --border-radius-small: 6px;
-  --border-radius-medium: 8px;
-  --border-radius-large: 12px;
-  --border-radius-xl: 16px;
+  --background-primary: #F8FAFC;
+  --background-secondary: #FFFFFF;
+  --background-card: #FFFFFF;
+  --background-header: var(--hero-gradient);
+  --background-sidebar: #FFFFFF;
+  
+  /* BORDER COLORS */
+  --border-color: #E2E8F0;
+  --border-light: #F1F5F9;
+  
+  /* SHADOWS */
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 2px 8px rgba(6, 182, 212, 0.1);
+  --shadow-elevated: 0 20px 40px rgba(0, 0, 0, 0.1);
+  
+  /* BORDER RADIUS */
+  --border-radius-small: 8px;
+  --border-radius-medium: 12px;
+  --border-radius-large: 16px;
+  --border-radius-xl: 20px;
+  --border-radius-full: 50%;
+  
+  /* SPACING */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  
+  /* TRANSITIONS */
+  --transition-fast: 0.15s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* STATUS COLORS */
+  --success-color: #10B981;
+  --error-color: #EF4444;
+  --warning-color: #F59E0B;
+  --info-color: #3B82F6;
 }
 
 /* Base HTML and Body Styles */
@@ -46,6 +93,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* Typography */
@@ -88,7 +136,7 @@ a {
 }
 
 a:hover {
-  color: var(--secondary-color);
+  color: var(--primary-dark);
   text-decoration: underline;
 }
 
@@ -114,13 +162,13 @@ input, textarea, select {
   border-radius: var(--border-radius-medium);
   padding: 0.75rem 1rem;
   transition: var(--transition-fast);
-  background: var(--background-primary);
+  background: var(--background-secondary);
 }
 
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
 }
 
 /* Scrollbar Styling */
@@ -130,7 +178,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(6, 182, 212, 0.1);
   border-radius: var(--border-radius-small);
 }
 
@@ -141,17 +189,17 @@ input:focus, textarea:focus, select:focus {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary-color);
+  background: var(--primary-dark);
 }
 
 /* Selection Styling */
 ::selection {
-  background: rgba(102, 126, 234, 0.2);
+  background: rgba(6, 182, 212, 0.2);
   color: var(--text-primary);
 }
 
 ::-moz-selection {
-  background: rgba(102, 126, 234, 0.2);
+  background: rgba(6, 182, 212, 0.2);
   color: var(--text-primary);
 }
 
@@ -282,7 +330,7 @@ input:focus, textarea:focus, select:focus {
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid rgba(102, 126, 234, 0.3);
+  border: 3px solid rgba(6, 182, 212, 0.3);
   border-radius: 50%;
   border-top-color: var(--primary-color);
   animation: spin 1s ease-in-out infinite;
@@ -296,7 +344,7 @@ input:focus, textarea:focus, select:focus {
 
 /* Code Block Styling */
 code {
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(6, 182, 212, 0.1);
   color: var(--primary-color);
   padding: 0.2rem 0.4rem;
   border-radius: var(--border-radius-small);
@@ -323,10 +371,10 @@ pre code {
 
 /* Card Styling */
 .card {
-  background: var(--background-secondary);
+  background: var(--background-card);
   border-radius: var(--border-radius-xl);
   padding: 1.5rem;
-  box-shadow: var(--shadow-medium);
+  box-shadow: var(--shadow-card);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
 }
@@ -364,7 +412,7 @@ pre code {
 }
 
 .bg-success {
-  background: rgba(34, 197, 94, 0.1);
+  background: rgba(16, 185, 129, 0.1);
 }
 
 .bg-error {
@@ -422,179 +470,144 @@ pre code {
   }
 }
 
-/* Iframe-specific optimizations */
-@media (max-width: 768px) {
-  .AppContainer {
-    min-height: auto;
-    padding: 10px;
-  }
-  
-  .MainContent {
-    padding: 10px;
-  }
-}
-
-/* Normal app layout - allows dynamic height calculation */
+/* Web App Layout */
 .AppContainer {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  background: var(--background-primary);
 }
 
 .MainContent {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 var(--spacing-lg);
 }
 
+/* Header Styles */
 .Header {
-  padding: 8px 12px;
-  margin-bottom: 8px;
+  background: var(--background-header);
+  padding: var(--spacing-2xl) 0;
+  margin-bottom: var(--spacing-2xl);
+  position: relative;
+  overflow: hidden;
 }
 
-.Header h1 {
-  font-size: 1.3rem;
-  margin: 0 0 4px 0;
+.Header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
 }
 
-.Header p {
-  font-size: 0.85rem;
+.Header::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.HeaderContent {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--text-white);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.HeaderTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: var(--spacing-md);
+  line-height: 1.2;
+}
+
+.HeaderSubtitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  opacity: 0.9;
   margin: 0;
-  opacity: 0.8;
+  line-height: 1.6;
 }
 
-/* Responsive design */
+/* Content Sections */
+.ContentSection {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.SectionTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.SectionSubtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Grid Layouts */
+.GridContainer {
+  display: grid;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.Grid2 {
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+.Grid3 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.Grid4 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .AppContainer {
-    padding: 10px;
-  }
-  
   .MainContent {
-    padding: 10px;
-  }
-}
-
-/* Full-height layout for iframe */
-@media (min-height: 600px) {
-  .AppContainer {
-    padding: 12px;
-  }
-  
-  .MainContent {
-    padding: 12px;
+    padding: 0 var(--spacing-md);
   }
   
   .Header {
-    padding: 12px 16px;
-    margin-bottom: 12px;
+    padding: var(--spacing-xl) 0;
+    margin-bottom: var(--spacing-xl);
   }
   
-  .Header h1 {
-    font-size: 1.5rem;
-    margin: 0 0 6px 0;
+  .HeaderTitle {
+    font-size: 2.5rem;
   }
   
-  .Header p {
-    font-size: 0.9rem;
-  }
-}
-
-/* Compact layout for smaller iframes */
-@media (max-height: 500px) {
-  .AppContainer {
-    padding: 4px;
-  }
-  
-  .MainContent {
-    padding: 4px;
-  }
-  
-  .Header {
-    padding: 6px 8px;
-    margin-bottom: 6px;
-  }
-  
-  .Header h1 {
+  .HeaderSubtitle {
     font-size: 1.1rem;
-    margin: 0 0 2px 0;
   }
   
-  .Header p {
-    font-size: 0.75rem;
+  .Grid2,
+  .Grid3,
+  .Grid4 {
+    grid-template-columns: 1fr;
   }
-}
-
-/* Remove all scrollbars */
-html, body {
-  overflow: hidden !important;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
-/* Hide scrollbars completely */
-::-webkit-scrollbar {
-  display: none;
-}
-
-/* Ensure no overflow anywhere */
-* {
-  box-sizing: border-box;
-}
-
-/* Make quiz components fit without scrolling */
-.QuizContainer {
-  overflow: hidden;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.QuestionContainer {
-  flex: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.QuestionText {
-  flex-shrink: 0;
-  margin-bottom: 16px;
-}
-
-.OptionsContainer {
-  flex: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.OptionButton {
-  flex-shrink: 0;
-}
-
-/* Database viewer adjustments */
-.DatabaseViewer {
-  overflow: hidden;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.DatabaseViewerContent {
-  flex: 1;
-  overflow: hidden;
-}
-
-/* Results container */
-.ResultsContainer {
-  overflow: hidden;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
