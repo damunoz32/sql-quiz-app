@@ -257,26 +257,244 @@ The app is already responsive, but you can adjust the iframe height:
 ></iframe>
 ```
 
-## 🚀 **Deploy Customized Version**
+## 🎨 **Premium Visual Enhancement**
 
-After making color changes:
+### **Premium Glass Morphism Embed (Matches Your Website)**
 
-1. **Build the app:**
-   ```bash
-   npm run build
-   ```
+```html
+<!-- Premium SQL Quiz App Embed -->
+<div class="sql-quiz-premium-wrapper">
+  <div class="sql-quiz-premium-container">
+    <div class="sql-quiz-header">
+      <div class="sql-quiz-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 7V4C4 3.44772 4.44772 3 5 3H19C19.5523 3 20 3.44772 20 4V7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M4 7V20C4 20.5523 4.44772 21 5 21H19C19.5523 21 20 20.5523 20 20V7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 11H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 15H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="sql-quiz-title">
+        <h3>SQL Quiz Master</h3>
+        <p>Interactive Database Query Practice</p>
+      </div>
+    </div>
+    
+    <div class="sql-quiz-iframe-container">
+      <iframe 
+        id="sql-quiz-premium-iframe"
+        src="https://damunoz32.github.io/sql-quiz-app" 
+        width="100%" 
+        height="600px" 
+        frameborder="0" 
+        scrolling="no"
+        title="SQL Quiz Master"
+      ></iframe>
+    </div>
+  </div>
+</div>
 
-2. **Copy to docs folder:**
-   ```bash
-   xcopy build\* docs\ /E /I /Y
-   ```
+<style>
+.sql-quiz-premium-wrapper {
+  padding: 30px 20px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  margin: 30px 0;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
 
-3. **Commit and push:**
-   ```bash
-   git add docs
-   git commit -m "Update colors to match Webflow site"
-   git push origin main
-   ```
+.sql-quiz-premium-container {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f3f4;
+}
+
+.sql-quiz-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.sql-quiz-icon {
+  background: #667eea;
+  border-radius: 8px;
+  padding: 8px;
+  color: white;
+}
+
+.sql-quiz-title h3 {
+  color: #333;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Jost', sans-serif;
+}
+
+.sql-quiz-title p {
+  color: #666;
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  font-family: 'Afacad Flux', sans-serif;
+}
+
+.sql-quiz-iframe-container {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+}
+
+#sql-quiz-premium-iframe {
+  border: none;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+/* Responsive Design - No Scrolling */
+@media (max-width: 1024px) {
+  .sql-quiz-premium-wrapper {
+    padding: 20px 15px;
+    margin: 20px 0;
+  }
+  
+  .sql-quiz-premium-container {
+    padding: 20px;
+  }
+  
+  #sql-quiz-premium-iframe {
+    height: 550px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .sql-quiz-premium-wrapper {
+    padding: 15px 10px;
+    margin: 15px 0;
+  }
+  
+  .sql-quiz-premium-container {
+    padding: 15px;
+  }
+  
+  .sql-quiz-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  #sql-quiz-premium-iframe {
+    height: 500px !important;
+  }
+  
+  .sql-quiz-title h3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sql-quiz-premium-wrapper {
+    padding: 10px 5px;
+  }
+  
+  .sql-quiz-premium-container {
+    padding: 12px;
+  }
+  
+  #sql-quiz-premium-iframe {
+    height: 450px !important;
+  }
+  
+  .sql-quiz-title h3 {
+    font-size: 16px;
+  }
+}
+</style>
+
+<script>
+// Responsive iframe management - No scrolling
+(function() {
+  const iframe = document.getElementById('sql-quiz-premium-iframe');
+  
+  function setResponsiveHeight() {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    
+    // Calculate available height (accounting for header, padding, margins)
+    const availableHeight = viewportHeight - 200; // Reserve space for other content
+    
+    if (viewportWidth <= 480px) {
+      iframe.style.height = Math.min(450, availableHeight) + 'px';
+    } else if (viewportWidth <= 768) {
+      iframe.style.height = Math.min(500, availableHeight) + 'px';
+    } else if (viewportWidth <= 1024) {
+      iframe.style.height = Math.min(550, availableHeight) + 'px';
+    } else {
+      iframe.style.height = Math.min(600, availableHeight) + 'px';
+    }
+  }
+  
+  setResponsiveHeight();
+  window.addEventListener('resize', setResponsiveHeight);
+  
+  // Smooth loading animation
+  iframe.onload = function() {
+    iframe.style.opacity = '1';
+    iframe.style.transform = 'scale(1)';
+  };
+  
+  // Initial loading state
+  iframe.style.opacity = '0.95';
+  iframe.style.transform = 'scale(0.99)';
+  iframe.style.transition = 'all 0.3s ease';
+})();
+</script>
+
+## 🎯 **Key Features:**
+
+✅ **Matches your website's clean, professional aesthetic**  
+✅ **No scrolling required** - fits perfectly on viewport  
+✅ **Responsive design** across all devices  
+✅ **Smooth loading animations**  
+✅ **Clean, organized code**  
+✅ **Professional typography** matching your fonts  
+✅ **Subtle shadows and borders**  
+
+## 🚀 **Implementation:**
+
+1. **Copy the code above**
+2. **Replace your current embed** in Webflow
+3. **Test on different devices** - no scrolling needed!
+4. **Publish and enjoy** your enhanced SQL quiz!
+
+## 🎨 **Color Scheme:**
+
+This design uses a clean, professional color palette that matches your website:
+- **Background:** Light gray (#f8f9fa) 
+- **Container:** White with subtle borders
+- **Accent:** Blue (#667eea) for the icon
+- **Text:** Dark gray (#333) for headings, medium gray (#666) for descriptions
+- **Borders:** Light gray (#e9ecef, #f1f3f4)
+
+## 🎯 **Quick Enhancement Tips**
+
+1. **Choose the design that matches your site's aesthetic**
+2. **Test on different devices** to ensure responsiveness
+3. **Consider adding loading animations** for better UX
+4. **Use consistent color schemes** with your Webflow site
+5. **Add subtle hover effects** for interactivity
+
+## 🚀 **Implementation Steps**
+
+1. **Copy your preferred option** from above
+2. **Replace the current embed code** in Webflow
+3. **Test the responsive behavior** on different devices
+4. **Adjust colors** to match your site's palette
+5. **Publish and enjoy** your enhanced SQL quiz!
 
 ## 🎯 **Pro Tips**
 
