@@ -10,19 +10,20 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { sampleDatabase, sampleQueries, databaseSchema } from '../data/sampleDatabase';
 
-// Main container for the database viewer
+// Main viewer container
 const ViewerContainer = styled.div`
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--background-secondary);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
+  border-radius: var(--border-radius-xl);
   padding: 30px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-heavy);
+  border: 1px solid var(--border-color);
   max-width: 1200px;
   margin: 0 auto;
   
   @media (max-width: 768px) {
     padding: 20px;
-    margin: 0 10px;
+    margin: 10px;
   }
 `;
 
@@ -36,18 +37,15 @@ const SectionHeader = styled.h2`
   padding-bottom: 10px;
 `;
 
-// Tabs container for switching between views
+// Tabs container
 const TabsContainer = styled.div`
   display: flex;
   gap: 8px;
   margin-bottom: 30px;
-  background: rgba(102, 126, 234, 0.1);
+  background: var(--background-primary);
   padding: 8px;
-  border-radius: 12px;
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
+  border-radius: var(--border-radius-large);
+  border: 1px solid var(--border-color);
 `;
 
 // Individual tab button
@@ -55,15 +53,24 @@ const TabButton = styled.button`
   flex: 1;
   padding: 12px 20px;
   border: none;
-  border-radius: 8px;
-  background: ${props => props.$active ? 'white' : 'transparent'};
-  color: ${props => props.$active ? '#667eea' : '#666'};
+  border-radius: var(--border-radius-medium);
+  background: ${props => props.$active ? 'var(--primary-gradient)' : 'transparent'};
+  color: ${props => props.$active ? 'var(--background-primary)' : 'var(--text-primary)'};
   font-weight: ${props => props.$active ? '600' : '500'};
+  font-size: 16px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-medium);
   
   &:hover {
-    background: ${props => props.$active ? 'white' : 'rgba(255, 255, 255, 0.5)'};
+    background: ${props => props.$active 
+      ? 'var(--primary-gradient)' 
+      : 'rgba(209, 169, 128, 0.1)'
+    };
+    transform: ${props => props.$active ? 'none' : 'translateY(-1px)'};
+  }
+  
+  &:active {
+    transform: translateY(0);
   }
   
   @media (max-width: 768px) {
@@ -77,26 +84,31 @@ const SchemaSection = styled.div`
   margin-bottom: 40px;
 `;
 
-const TableCard = styled(motion.div)`
-  background: white;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 12px;
+// Table card container
+const TableCard = styled.div`
+  background: var(--background-primary);
+  border-radius: var(--border-radius-large);
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-light);
 `;
 
-const TableName = styled.h3`
-  color: #667eea;
+// Table title
+const TableTitle = styled.h3`
   font-size: 1.3rem;
-  margin-bottom: 10px;
   font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
 `;
 
+// Table description
 const TableDescription = styled.p`
-  color: #666;
-  margin-bottom: 15px;
-  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.6;
 `;
 
 const ColumnGrid = styled.div`
@@ -133,97 +145,107 @@ const QuerySection = styled.div`
   margin-bottom: 40px;
 `;
 
+// Query input container
 const QueryInput = styled.textarea`
   width: 100%;
   min-height: 120px;
   padding: 15px;
-  border: 2px solid rgba(102, 126, 234, 0.2);
-  border-radius: 8px;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  background: var(--background-primary);
+  color: var(--text-primary);
+  font-family: 'Courier New', monospace;
   font-size: 14px;
-  line-height: 1.5;
   resize: vertical;
-  background: #1e293b;
-  color: #e2e8f0;
+  margin-bottom: 15px;
   
   &:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(209, 169, 128, 0.1);
+  }
+  
+  &::placeholder {
+    color: var(--text-light);
   }
 `;
 
-const QueryButton = styled(motion.button)`
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+// Query button
+const QueryButton = styled.button`
+  background: var(--primary-gradient);
+  color: var(--background-primary);
   border: none;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-medium);
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 15px;
+  transition: all var(--transition-medium);
+  margin-bottom: 20px;
   
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  &:active {
-    transform: translateY(0);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
   }
   
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
     transform: none;
   }
+  
+  @media (max-width: 768px) {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
 `;
 
-// Results section styling
-const ResultsSection = styled.div`
-  margin-top: 30px;
-`;
-
+// Results table
 const ResultsTable = styled.div`
-  background: white;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 8px;
+  background: var(--background-primary);
+  border-radius: var(--border-radius-medium);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  margin-top: 20px;
 `;
 
+// Table header
 const TableHeader = styled.div`
-  background: rgba(102, 126, 234, 0.1);
-  padding: 15px;
-  font-weight: 600;
-  color: #333;
-  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+  background: var(--background-secondary);
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-color);
 `;
 
-const TableBody = styled.div`
+// Table header text
+const TableHeaderText = styled.h4`
+  color: var(--text-primary);
+  font-weight: 600;
+  margin: 0;
+`;
+
+// Table content
+const TableContent = styled.div`
   max-height: 400px;
   overflow-y: auto;
 `;
 
+// Table row
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: ${props => props.columns};
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1px;
-  background: #f8fafc;
+  background: var(--border-color);
   
   &:nth-child(even) {
-    background: white;
-  }
-  
-  &:hover {
-    background: rgba(102, 126, 234, 0.05);
+    background: var(--background-secondary);
   }
 `;
 
+// Table cell
 const TableCell = styled.div`
-  padding: 12px 15px;
-  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  padding: 10px 15px;
+  background: var(--background-primary);
+  color: var(--text-primary);
   font-size: 14px;
   word-break: break-word;
 `;
@@ -233,59 +255,68 @@ const SampleQueriesSection = styled.div`
   margin-bottom: 40px;
 `;
 
-const QueryCard = styled(motion.div)`
-  background: white;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 12px;
+// Sample query card
+const QueryCard = styled.div`
+  background: var(--background-primary);
+  border-radius: var(--border-radius-medium);
   padding: 20px;
   margin-bottom: 15px;
+  border: 1px solid var(--border-color);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-medium);
   
   &:hover {
-    border-color: #667eea;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-color);
   }
 `;
 
+// Query title
 const QueryTitle = styled.h4`
-  color: #333;
-  margin-bottom: 8px;
+  color: var(--text-primary);
   font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
 `;
 
+// Query description
 const QueryDescription = styled.p`
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 12px;
+  line-height: 1.5;
   font-size: 14px;
 `;
 
-const QueryCode = styled.div`
-  background: #1e293b;
-  color: #e2e8f0;
-  padding: 12px;
-  border-radius: 6px;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+// Query code
+const QueryCode = styled.code`
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: var(--border-radius-small);
+  font-family: 'Courier New', monospace;
   font-size: 13px;
-  overflow-x: auto;
+  display: block;
+  white-space: pre-wrap;
+  border: 1px solid var(--border-color);
 `;
 
+// Query difficulty badge
 const QueryDifficulty = styled.span`
   background: ${props => {
     switch (props.$difficulty) {
-      case 'beginner': return 'rgba(34, 197, 94, 0.1)';
-      case 'intermediate': return 'rgba(59, 130, 246, 0.1)';
-      case 'advanced': return 'rgba(245, 158, 11, 0.1)';
-      default: return 'rgba(107, 114, 128, 0.1)';
+      case 'beginner': return 'rgba(144, 160, 143, 0.2)';
+      case 'intermediate': return 'rgba(209, 169, 128, 0.2)';
+      case 'advanced': return 'rgba(116, 136, 115, 0.2)';
+      default: return 'rgba(144, 160, 143, 0.2)';
     }
   }};
   color: ${props => {
     switch (props.$difficulty) {
-      case 'beginner': return '#22c55e';
-      case 'intermediate': return '#3b82f6';
-      case 'advanced': return '#f59e0b';
-      default: return '#6b7280';
+      case 'beginner': return '#90A08F';
+      case 'intermediate': return '#D1A980';
+      case 'advanced': return '#748873';
+      default: return '#90A08F';
     }
   }};
   padding: 4px 8px;
@@ -295,26 +326,24 @@ const QueryDifficulty = styled.span`
   text-transform: capitalize;
 `;
 
-// Error message styling
+// Error message
 const ErrorMessage = styled.div`
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  color: #ef4444;
+  background: var(--error-color);
+  color: var(--background-primary);
   padding: 15px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-medium);
   margin-top: 15px;
-  font-size: 14px;
+  border: 1px solid var(--error-color);
 `;
 
-// Success message styling
+// Success message
 const SuccessMessage = styled.div`
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.2);
-  color: #22c55e;
+  background: var(--success-color);
+  color: var(--background-primary);
   padding: 15px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-medium);
   margin-top: 15px;
-  font-size: 14px;
+  border: 1px solid var(--success-color);
 `;
 
 // DatabaseViewer component
@@ -452,7 +481,7 @@ function DatabaseViewer() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <TableName>{tableName.toUpperCase()}</TableName>
+                  <TableTitle>{tableName.toUpperCase()}</TableTitle>
                   <TableDescription>{schema.description}</TableDescription>
                   <ColumnGrid>
                     <ColumnHeader>Column Name</ColumnHeader>
@@ -504,35 +533,32 @@ function DatabaseViewer() {
 
               {/* Results */}
               {results && (
-                <ResultsSection>
-                  <SectionHeader>Query Results</SectionHeader>
-                  <ResultsTable>
-                    <TableHeader>
-                      {results.columns.length} columns, {results.data.length} rows
-                    </TableHeader>
-                    <TableBody>
-                      {/* Column Headers */}
-                      <TableRow columns={`repeat(${results.columns.length}, 1fr)`}>
-                        {results.columns.map((column, index) => (
-                          <TableCell key={index} style={{ fontWeight: '600', background: 'rgba(102, 126, 234, 0.1)' }}>
-                            {column}
+                <ResultsTable>
+                  <TableHeader>
+                    {results.columns.length} columns, {results.data.length} rows
+                  </TableHeader>
+                  <TableContent>
+                    {/* Column Headers */}
+                    <TableRow>
+                      {results.columns.map((column, index) => (
+                        <TableCell key={index} style={{ fontWeight: '600', background: 'rgba(102, 126, 234, 0.1)' }}>
+                          {column}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                    
+                    {/* Data Rows */}
+                    {results.data.map((row, rowIndex) => (
+                      <TableRow key={rowIndex}>
+                        {results.columns.map((column, colIndex) => (
+                          <TableCell key={colIndex}>
+                            {row[column] !== undefined ? String(row[column]) : 'NULL'}
                           </TableCell>
                         ))}
                       </TableRow>
-                      
-                      {/* Data Rows */}
-                      {results.data.map((row, rowIndex) => (
-                        <TableRow key={rowIndex} columns={`repeat(${results.columns.length}, 1fr)`}>
-                          {results.columns.map((column, colIndex) => (
-                            <TableCell key={colIndex}>
-                              {row[column] !== undefined ? String(row[column]) : 'NULL'}
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </ResultsTable>
-                </ResultsSection>
+                    ))}
+                  </TableContent>
+                </ResultsTable>
               )}
             </QuerySection>
           </motion.div>

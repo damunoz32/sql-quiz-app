@@ -11,43 +11,41 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getRandomQuestions, quizConfig } from '../data/quizQuestions';
 
-// Styled component for the quiz container
-// Creates a clean, card-like interface for the quiz
+// Main quiz container with glass morphism effect
 const QuizContainer = styled.div`
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--background-secondary);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
+  border-radius: var(--border-radius-xl);
   padding: 30px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-heavy);
+  border: 1px solid var(--border-color);
   max-width: 800px;
   margin: 0 auto;
   
   @media (max-width: 768px) {
     padding: 20px;
-    margin: 0 10px;
+    margin: 10px;
   }
 `;
 
 // Progress bar container
-const ProgressContainer = styled.div`
-  margin-bottom: 30px;
-`;
-
-// Progress bar styling
 const ProgressBar = styled.div`
   width: 100%;
   height: 8px;
-  background: rgba(102, 126, 234, 0.2);
+  background: var(--background-primary);
   border-radius: 4px;
+  margin-bottom: 30px;
   overflow: hidden;
-  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
 `;
 
-// Animated progress fill
-const ProgressFill = styled(motion.div)`
+// Progress bar fill
+const ProgressFill = styled.div`
   height: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--primary-gradient);
   border-radius: 4px;
+  transition: width var(--transition-medium);
+  width: ${props => props.$progress}%;
 `;
 
 // Progress text
@@ -60,17 +58,17 @@ const ProgressText = styled.div`
 `;
 
 // Question container
-const QuestionContainer = styled(motion.div)`
+const QuestionContainer = styled.div`
   margin-bottom: 30px;
 `;
 
-// Question text styling
+// Question text
 const QuestionText = styled.h2`
   font-size: 1.4rem;
-  color: #333;
+  font-weight: 600;
+  color: var(--text-primary);
   margin-bottom: 20px;
   line-height: 1.5;
-  font-weight: 600;
   
   @media (max-width: 768px) {
     font-size: 1.2rem;
@@ -86,28 +84,13 @@ const QuestionMeta = styled.div`
 `;
 
 const MetaTag = styled.span`
-  background: ${props => {
-    switch (props.$difficulty) {
-      case 'beginner': return 'rgba(34, 197, 94, 0.1)';
-      case 'intermediate': return 'rgba(59, 130, 246, 0.1)';
-      case 'advanced': return 'rgba(245, 158, 11, 0.1)';
-      case 'expert': return 'rgba(239, 68, 68, 0.1)';
-      default: return 'rgba(107, 114, 128, 0.1)';
-    }
-  }};
-  color: ${props => {
-    switch (props.$difficulty) {
-      case 'beginner': return '#22c55e';
-      case 'intermediate': return '#3b82f6';
-      case 'advanced': return '#f59e0b';
-      case 'expert': return '#ef4444';
-      default: return '#6b7280';
-    }
-  }};
-  padding: 4px 12px;
-  border-radius: 20px;
+  background: var(--background-primary);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: var(--border-radius-small);
+  font-size: 12px;
   font-weight: 500;
-  text-transform: capitalize;
+  border: 1px solid var(--border-color);
 `;
 
 // Options container
@@ -115,46 +98,45 @@ const OptionsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 30px;
 `;
 
 // Individual option button
-const OptionButton = styled(motion.button)`
-  background: ${props => {
-    if (props.$isSelected) {
-      return props.$isCorrect ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)';
-    }
-    return 'rgba(255, 255, 255, 0.8)';
-  }};
-  border: 2px solid ${props => {
-    if (props.$isSelected) {
-      return props.$isCorrect ? '#22c55e' : '#ef4444';
-    }
-    return 'rgba(102, 126, 234, 0.2)';
-  }};
-  color: ${props => {
-    if (props.$isSelected) {
-      return props.$isCorrect ? '#22c55e' : '#ef4444';
-    }
-    return '#333';
-  }};
+const OptionButton = styled.button`
   padding: 16px 20px;
-  border-radius: 12px;
-  text-align: left;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  background: var(--background-primary);
+  color: var(--text-primary);
   font-size: 16px;
-  cursor: ${props => props.$showAnswer ? 'default' : 'pointer'};
-  transition: all 0.2s ease;
-  position: relative;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+  text-align: left;
   
   &:hover {
-    ${props => !props.$showAnswer && `
-      background: rgba(102, 126, 234, 0.05);
-      border-color: rgba(102, 126, 234, 0.4);
-      transform: translateY(-1px);
-    `}
+    background: rgba(209, 169, 128, 0.1);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
   }
   
-  &:active {
-    transform: translateY(0);
+  &.selected {
+    background: var(--primary-gradient);
+    color: var(--background-primary);
+    border-color: var(--primary-color);
+  }
+  
+  &.correct {
+    background: var(--success-color);
+    color: var(--background-primary);
+    border-color: var(--success-color);
+  }
+  
+  &.incorrect {
+    background: var(--error-color);
+    color: var(--background-primary);
+    border-color: var(--error-color);
   }
   
   @media (max-width: 768px) {
@@ -170,80 +152,92 @@ const OptionLetter = styled.span`
   color: #667eea;
 `;
 
-// Feedback container for explanations
-const FeedbackContainer = styled(motion.div)`
-  margin-top: 25px;
+// Feedback container
+const FeedbackContainer = styled.div`
+  background: var(--background-primary);
+  border-radius: var(--border-radius-large);
   padding: 20px;
-  background: ${props => props.$isCorrect ? 'rgba(34, 197, 94, 0.05)' : 'rgba(239, 68, 68, 0.05)'};
-  border: 1px solid ${props => props.$isCorrect ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)'};
-  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-light);
 `;
 
+// Feedback title
 const FeedbackTitle = styled.h3`
-  color: ${props => props.$isCorrect ? '#22c55e' : '#ef4444'};
-  margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: 600;
+  margin-bottom: 10px;
+  color: ${props => props.$isCorrect ? 'var(--success-color)' : 'var(--error-color)'};
 `;
 
+// Feedback text
 const FeedbackText = styled.p`
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 15px;
 `;
 
+// SQL example container
 const SQLExample = styled.div`
-  background: #1e293b;
-  color: #e2e8f0;
+  background: var(--background-secondary);
+  border-radius: var(--border-radius-medium);
   padding: 15px;
-  border-radius: 8px;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-size: 14px;
-  overflow-x: auto;
-  margin-top: 10px;
+  border-left: 4px solid var(--primary-color);
+  margin-top: 15px;
 `;
 
-// Navigation buttons container
+// SQL example title
+const SQLExampleTitle = styled.h4`
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+`;
+
+// SQL code
+const SQLCode = styled.code`
+  background: var(--background-primary);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: var(--border-radius-small);
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  display: block;
+  white-space: pre-wrap;
+  border: 1px solid var(--border-color);
+`;
+
+// Button container
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
   gap: 15px;
+  justify-content: center;
   
   @media (max-width: 768px) {
     flex-direction: column;
+    gap: 10px;
   }
 `;
 
-// Styled button component
-const Button = styled(motion.button)`
-  background: ${props => props.variant === 'primary' 
-    ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
-    : 'rgba(255, 255, 255, 0.8)'
-  };
-  color: ${props => props.variant === 'primary' ? 'white' : '#333'};
-  border: 2px solid ${props => props.variant === 'primary' 
-    ? 'transparent' 
-    : 'rgba(102, 126, 234, 0.2)'
-  };
+// Action button
+const ActionButton = styled.button`
   padding: 12px 24px;
-  border-radius: 8px;
+  border: none;
+  border-radius: var(--border-radius-medium);
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-medium);
+  background: var(--primary-gradient);
+  color: var(--background-primary);
   
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  &:active {
-    transform: translateY(0);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
   }
   
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
     transform: none;
   }
@@ -254,13 +248,29 @@ const Button = styled(motion.button)`
   }
 `;
 
+// Meta information container
+const MetaContainer = styled.div`
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
+`;
+
 // Timer component
 const Timer = styled.div`
   text-align: center;
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: 600;
-  color: #667eea;
+  color: var(--text-primary);
   margin-bottom: 20px;
+  padding: 10px;
+  background: var(--background-primary);
+  border-radius: var(--border-radius-medium);
+  border: 1px solid var(--border-color);
 `;
 
 // QuizInterface component
@@ -347,18 +357,13 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
       setSelectedAnswer(null);
       setShowAnswer(false);
     } else {
-      // Handle quiz completion directly
+      // Quiz completed
       setIsQuizComplete(true);
-      const finalScore = selectedAnswer === questions[currentQuestionIndex]?.correctAnswer 
-        ? score + 1 
-        : score;
-      
       updateQuizProgress({
-        score: finalScore,
+        score: score,
         isComplete: true,
         currentQuestion: currentQuestionIndex
       });
-      
       onComplete();
     }
   };
@@ -370,19 +375,22 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // If no questions loaded yet
+  // Calculate progress percentage
+  const progress = questions.length > 0 ? ((currentQuestionIndex + 1) / questions.length) * 100 : 0;
+
+  // Get current question
+  const currentQuestion = questions[currentQuestionIndex];
+
+  // Show loading state
   if (questions.length === 0) {
     return (
       <QuizContainer>
         <div style={{ textAlign: 'center', padding: '40px' }}>
-          <h2>Loading Quiz...</h2>
+          <div style={{ fontSize: '24px', marginBottom: '20px' }}>Loading quiz...</div>
         </div>
       </QuizContainer>
     );
   }
-
-  const currentQuestion = questions[currentQuestionIndex];
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   return (
     <QuizContainer>
@@ -392,19 +400,15 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
       </Timer>
 
       {/* Progress Bar */}
-      <ProgressContainer>
-        <ProgressBar>
-          <ProgressFill
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.3 }}
-          />
-        </ProgressBar>
-        <ProgressText>
-          <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
-          <span>Score: {score}</span>
-        </ProgressText>
-      </ProgressContainer>
+      <ProgressBar>
+        <ProgressFill
+          $progress={progress}
+        />
+      </ProgressBar>
+      <ProgressText>
+        <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
+        <span>Score: {score}</span>
+      </ProgressText>
 
       {/* Question */}
       <AnimatePresence mode="wait">
@@ -417,31 +421,39 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
         >
           <QuestionText>{currentQuestion.question}</QuestionText>
           
-          <QuestionMeta>
+          <MetaContainer>
             <MetaTag $difficulty={currentQuestion.difficulty}>
               {currentQuestion.difficulty}
             </MetaTag>
             <MetaTag $difficulty="category">
               {currentQuestion.category}
             </MetaTag>
-          </QuestionMeta>
+          </MetaContainer>
 
           {/* Answer Options */}
           <OptionsContainer>
-            {currentQuestion.options.map((option, index) => (
-              <OptionButton
-                key={index}
-                onClick={() => handleAnswerSelect(index)}
-                $isSelected={selectedAnswer === index}
-                $isCorrect={index === currentQuestion.correctAnswer}
-                $showAnswer={showAnswer}
-                whileHover={!showAnswer ? { scale: 1.02 } : {}}
-                whileTap={!showAnswer ? { scale: 0.98 } : {}}
-              >
-                <OptionLetter>{String.fromCharCode(65 + index)}.</OptionLetter>
-                {option}
-              </OptionButton>
-            ))}
+            {currentQuestion.options.map((option, index) => {
+              let className = '';
+              if (selectedAnswer === index) {
+                className = 'selected';
+                if (showAnswer) {
+                  className = index === currentQuestion.correctAnswer ? 'correct' : 'incorrect';
+                }
+              }
+              
+              return (
+                <OptionButton
+                  key={index}
+                  onClick={() => handleAnswerSelect(index)}
+                  className={className}
+                  whileHover={!showAnswer ? { scale: 1.02 } : {}}
+                  whileTap={!showAnswer ? { scale: 0.98 } : {}}
+                >
+                  <OptionLetter>{String.fromCharCode(65 + index)}.</OptionLetter>
+                  {option}
+                </OptionButton>
+              );
+            })}
           </OptionsContainer>
 
           {/* Feedback */}
@@ -457,7 +469,8 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
               </FeedbackTitle>
               <FeedbackText>{currentQuestion.explanation}</FeedbackText>
               <SQLExample>
-                {currentQuestion.sqlExample}
+                <SQLExampleTitle>SQL Example:</SQLExampleTitle>
+                <SQLCode>{currentQuestion.sqlExample}</SQLCode>
               </SQLExample>
             </FeedbackContainer>
           )}
@@ -466,35 +479,32 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
 
       {/* Navigation Buttons */}
       <ButtonContainer>
-        <Button
-          variant="secondary"
+        <ActionButton
           onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
           disabled={currentQuestionIndex === 0}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           ← Previous
-        </Button>
+        </ActionButton>
         
         {!showAnswer ? (
-          <Button
-            variant="primary"
+          <ActionButton
             onClick={handleSubmitAnswer}
             disabled={selectedAnswer === null}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             Submit Answer
-          </Button>
+          </ActionButton>
         ) : (
-          <Button
-            variant="primary"
+          <ActionButton
             onClick={handleNextQuestion}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             {currentQuestionIndex < questions.length - 1 ? 'Next Question →' : 'Finish Quiz'}
-          </Button>
+          </ActionButton>
         )}
       </ButtonContainer>
     </QuizContainer>

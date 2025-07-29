@@ -5,41 +5,74 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// Styled component for the navigation container
-// Creates a clean, modern navigation bar with proper spacing
+// Navigation container with glass morphism effect
 const NavContainer = styled.nav`
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--background-secondary);
   backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 8px;
+  border-radius: var(--border-radius-xl);
+  padding: 20px;
   margin-bottom: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  display: flex;
-  gap: 8px;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--border-color);
+`;
+
+// App title styling
+const AppTitle = styled.h1`
+  text-align: center;
+  color: var(--text-primary);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   
   @media (max-width: 768px) {
-    margin-bottom: 20px;
+    font-size: 2rem;
   }
 `;
 
-// Styled component for individual navigation tabs
-// Includes hover effects and active state styling
+// App subtitle styling
+const AppSubtitle = styled.p`
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  font-weight: 400;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+// Navigation tabs container
+const TabsContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  background: var(--background-primary);
+  padding: 8px;
+  border-radius: var(--border-radius-large);
+  border: 1px solid var(--border-color);
+`;
+
+// Individual tab button styling
 const NavTab = styled.button`
   flex: 1;
   padding: 12px 24px;
   border: none;
-  border-radius: 8px;
-  background: ${props => props.$active ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent'};
-  color: ${props => props.$active ? 'white' : '#333'};
+  border-radius: var(--border-radius-medium);
+  background: ${props => props.$active ? 'var(--primary-gradient)' : 'transparent'};
+  color: ${props => props.$active ? 'var(--background-primary)' : 'var(--text-primary)'};
   font-weight: ${props => props.$active ? '600' : '500'};
   font-size: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-medium);
   
   &:hover {
     background: ${props => props.$active 
-      ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
-      : 'rgba(102, 126, 234, 0.1)'
+      ? 'var(--primary-gradient)' 
+      : 'rgba(209, 169, 128, 0.1)'
     };
     transform: ${props => props.$active ? 'none' : 'translateY(-1px)'};
   }
@@ -51,35 +84,6 @@ const NavTab = styled.button`
   @media (max-width: 768px) {
     padding: 10px 16px;
     font-size: 14px;
-  }
-`;
-
-// App title component
-const AppTitle = styled.h1`
-  text-align: center;
-  color: white;
-  margin-bottom: 20px;
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  
-  @media (max-width: 768px) {
-    font-size: 2rem;
-    margin-bottom: 15px;
-  }
-`;
-
-// Subtitle component
-const AppSubtitle = styled.p`
-  text-align: center;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 30px;
-  font-size: 1.1rem;
-  font-weight: 400;
-  
-  @media (max-width: 768px) {
-    font-size: 1rem;
-    margin-bottom: 20px;
   }
 `;
 
@@ -95,18 +99,20 @@ function Navigation({ currentView, onViewChange }) {
       
       {/* Navigation tabs */}
       <NavContainer>
-        <NavTab 
-          $active={currentView === 'quiz'}
-          onClick={() => onViewChange('quiz')}
-        >
-          📝 Take Quiz
-        </NavTab>
-        <NavTab 
-          $active={currentView === 'database'}
-          onClick={() => onViewChange('database')}
-        >
-          🗄️ Explore Database
-        </NavTab>
+        <TabsContainer>
+          <NavTab 
+            $active={currentView === 'quiz'}
+            onClick={() => onViewChange('quiz')}
+          >
+            📝 Take Quiz
+          </NavTab>
+          <NavTab 
+            $active={currentView === 'database'}
+            onClick={() => onViewChange('database')}
+          >
+            🗄️ Explore Database
+          </NavTab>
+        </TabsContainer>
       </NavContainer>
     </>
   );

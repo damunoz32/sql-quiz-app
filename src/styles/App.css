@@ -10,33 +10,33 @@
   box-sizing: border-box;
 }
 
-/* Root variables for consistent theming - CUSTOMIZE THESE TO MATCH YOUR WEBFLOW SITE */
+/* Root variables for consistent theming - MATCHING HOBBIES APP COLOR SCHEME */
 :root {
-  /* Primary Colors - Update these to match your Webflow site */
-  --primary-color: #667eea;           /* Main brand color */
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --secondary-color: #764ba2;         /* Secondary brand color */
+  /* Primary Colors - Matching your hobbies app */
+  --primary-color: #D1A980;           /* Warm beige accent */
+  --primary-gradient: linear-gradient(135deg, #D1A980 0%, #B8946A 100%);
+  --secondary-color: #748873;         /* Sage green */
   
   /* Status Colors */
-  --success-color: #22c55e;           /* Green for correct answers */
-  --error-color: #ef4444;             /* Red for incorrect answers */
-  --warning-color: #f59e0b;           /* Orange for warnings */
-  --info-color: #3b82f6;              /* Blue for info */
+  --success-color: #90A08F;           /* Light sage for correct answers */
+  --error-color: #E8B4B4;             /* Soft red for incorrect answers */
+  --warning-color: #D1A980;           /* Warm beige for warnings */
+  --info-color: #748873;              /* Sage green for info */
   
-  /* Text Colors */
-  --text-primary: #333;               /* Main text color */
-  --text-secondary: #666;             /* Secondary text color */
-  --text-light: #999;                 /* Light text color */
+  /* Text Colors - Matching your hobbies app */
+  --text-primary: #F8F8F8;            /* Off-white main text */
+  --text-secondary: #90A08F;          /* Light sage secondary text */
+  --text-light: #B8946A;              /* Light beige for subtle text */
   
-  /* Background Colors */
-  --background-primary: #ffffff;      /* Main background */
-  --background-secondary: rgba(255, 255, 255, 0.95); /* Card backgrounds */
-  --border-color: rgba(102, 126, 234, 0.2); /* Border color */
+  /* Background Colors - Matching your hobbies app */
+  --background-primary: #3C4B3B;      /* Dark green main background */
+  --background-secondary: #5A6B59;    /* Medium green card backgrounds */
+  --border-color: #748873;            /* Sage green border */
   
   /* Shadows */
-  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.1);
-  --shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.2);
   
   /* Border Radius */
   --border-radius-small: 6px;
@@ -438,4 +438,41 @@ pre code {
   .slide-down {
     animation: none;
   }
+}
+
+/* Iframe-specific optimizations */
+@media (max-width: 768px) {
+  .AppContainer {
+    min-height: auto;
+    padding: 10px;
+  }
+  
+  .MainContent {
+    padding: 10px;
+  }
+}
+
+/* Ensure proper scrolling in iframe */
+html, body {
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--background-primary);
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
 }
