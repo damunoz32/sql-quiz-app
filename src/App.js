@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import QuizInterface from './components/QuizInterface';
 import DatabaseViewer from './components/DatabaseViewer';
 import Navigation from './components/Navigation';
+import ErrorBoundary from './components/ErrorBoundary';
 import './styles/App.css';
 
 // Styled component for the main app container
@@ -103,8 +104,11 @@ function App() {
           onViewChange={handleViewChange}
         />
         
-        {/* Render the current view (quiz, database, or results) */}
-        {renderCurrentView()}
+        {/* Error Boundary for graceful error handling */}
+        <ErrorBoundary>
+          {/* Render the current view (quiz, database, or results) */}
+          {renderCurrentView()}
+        </ErrorBoundary>
       </MainContent>
     </AppContainer>
   );

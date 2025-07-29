@@ -29,19 +29,19 @@ const NavTab = styled.button`
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
-  background: ${props => props.active ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent'};
-  color: ${props => props.active ? 'white' : '#333'};
-  font-weight: ${props => props.active ? '600' : '500'};
+  background: ${props => props.$active ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent'};
+  color: ${props => props.$active ? 'white' : '#333'};
+  font-weight: ${props => props.$active ? '600' : '500'};
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
   
   &:hover {
-    background: ${props => props.active 
+    background: ${props => props.$active 
       ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
       : 'rgba(102, 126, 234, 0.1)'
     };
-    transform: ${props => props.active ? 'none' : 'translateY(-1px)'};
+    transform: ${props => props.$active ? 'none' : 'translateY(-1px)'};
   }
   
   &:active {
@@ -96,13 +96,13 @@ function Navigation({ currentView, onViewChange }) {
       {/* Navigation tabs */}
       <NavContainer>
         <NavTab 
-          active={currentView === 'quiz'}
+          $active={currentView === 'quiz'}
           onClick={() => onViewChange('quiz')}
         >
           📝 Take Quiz
         </NavTab>
         <NavTab 
-          active={currentView === 'database'}
+          $active={currentView === 'database'}
           onClick={() => onViewChange('database')}
         >
           🗄️ Explore Database

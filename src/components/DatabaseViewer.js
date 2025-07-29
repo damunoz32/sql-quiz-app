@@ -56,14 +56,14 @@ const TabButton = styled.button`
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
-  background: ${props => props.active ? 'white' : 'transparent'};
-  color: ${props => props.active ? '#667eea' : '#666'};
-  font-weight: ${props => props.active ? '600' : '500'};
+  background: ${props => props.$active ? 'white' : 'transparent'};
+  color: ${props => props.$active ? '#667eea' : '#666'};
+  font-weight: ${props => props.$active ? '600' : '500'};
   cursor: pointer;
   transition: all 0.2s ease;
   
   &:hover {
-    background: ${props => props.active ? 'white' : 'rgba(255, 255, 255, 0.5)'};
+    background: ${props => props.$active ? 'white' : 'rgba(255, 255, 255, 0.5)'};
   }
   
   @media (max-width: 768px) {
@@ -273,7 +273,7 @@ const QueryCode = styled.div`
 
 const QueryDifficulty = styled.span`
   background: ${props => {
-    switch (props.difficulty) {
+    switch (props.$difficulty) {
       case 'beginner': return 'rgba(34, 197, 94, 0.1)';
       case 'intermediate': return 'rgba(59, 130, 246, 0.1)';
       case 'advanced': return 'rgba(245, 158, 11, 0.1)';
@@ -281,7 +281,7 @@ const QueryDifficulty = styled.span`
     }
   }};
   color: ${props => {
-    switch (props.difficulty) {
+    switch (props.$difficulty) {
       case 'beginner': return '#22c55e';
       case 'intermediate': return '#3b82f6';
       case 'advanced': return '#f59e0b';
@@ -414,19 +414,19 @@ function DatabaseViewer() {
       {/* Navigation Tabs */}
       <TabsContainer>
         <TabButton 
-          active={activeTab === 'schema'} 
+          $active={activeTab === 'schema'} 
           onClick={() => setActiveTab('schema')}
         >
           📋 Database Schema
         </TabButton>
         <TabButton 
-          active={activeTab === 'query'} 
+          $active={activeTab === 'query'} 
           onClick={() => setActiveTab('query')}
         >
           🔍 Run Queries
         </TabButton>
         <TabButton 
-          active={activeTab === 'samples'} 
+          $active={activeTab === 'samples'} 
           onClick={() => setActiveTab('samples')}
         >
           💡 Sample Queries
@@ -561,7 +561,7 @@ function DatabaseViewer() {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
                     <QueryTitle>{sample.title}</QueryTitle>
-                    <QueryDifficulty difficulty={sample.difficulty}>
+                    <QueryDifficulty $difficulty={sample.difficulty}>
                       {sample.difficulty}
                     </QueryDifficulty>
                   </div>

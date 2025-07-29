@@ -6,7 +6,7 @@
 // - Score calculation
 // - Immediate feedback with explanations
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getRandomQuestions, quizConfig } from '../data/quizQuestions';
@@ -87,7 +87,7 @@ const QuestionMeta = styled.div`
 
 const MetaTag = styled.span`
   background: ${props => {
-    switch (props.difficulty) {
+    switch (props.$difficulty) {
       case 'beginner': return 'rgba(34, 197, 94, 0.1)';
       case 'intermediate': return 'rgba(59, 130, 246, 0.1)';
       case 'advanced': return 'rgba(245, 158, 11, 0.1)';
@@ -96,7 +96,7 @@ const MetaTag = styled.span`
     }
   }};
   color: ${props => {
-    switch (props.difficulty) {
+    switch (props.$difficulty) {
       case 'beginner': return '#22c55e';
       case 'intermediate': return '#3b82f6';
       case 'advanced': return '#f59e0b';
@@ -120,20 +120,20 @@ const OptionsContainer = styled.div`
 // Individual option button
 const OptionButton = styled(motion.button)`
   background: ${props => {
-    if (props.isSelected) {
-      return props.isCorrect ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)';
+    if (props.$isSelected) {
+      return props.$isCorrect ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)';
     }
     return 'rgba(255, 255, 255, 0.8)';
   }};
   border: 2px solid ${props => {
-    if (props.isSelected) {
-      return props.isCorrect ? '#22c55e' : '#ef4444';
+    if (props.$isSelected) {
+      return props.$isCorrect ? '#22c55e' : '#ef4444';
     }
     return 'rgba(102, 126, 234, 0.2)';
   }};
   color: ${props => {
-    if (props.isSelected) {
-      return props.isCorrect ? '#22c55e' : '#ef4444';
+    if (props.$isSelected) {
+      return props.$isCorrect ? '#22c55e' : '#ef4444';
     }
     return '#333';
   }};
@@ -141,12 +141,12 @@ const OptionButton = styled(motion.button)`
   border-radius: 12px;
   text-align: left;
   font-size: 16px;
-  cursor: ${props => props.showAnswer ? 'default' : 'pointer'};
+  cursor: ${props => props.$showAnswer ? 'default' : 'pointer'};
   transition: all 0.2s ease;
   position: relative;
   
   &:hover {
-    ${props => !props.showAnswer && `
+    ${props => !props.$showAnswer && `
       background: rgba(102, 126, 234, 0.05);
       border-color: rgba(102, 126, 234, 0.4);
       transform: translateY(-1px);
@@ -174,13 +174,13 @@ const OptionLetter = styled.span`
 const FeedbackContainer = styled(motion.div)`
   margin-top: 25px;
   padding: 20px;
-  background: ${props => props.isCorrect ? 'rgba(34, 197, 94, 0.05)' : 'rgba(239, 68, 68, 0.05)'};
-  border: 1px solid ${props => props.isCorrect ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)'};
+  background: ${props => props.$isCorrect ? 'rgba(34, 197, 94, 0.05)' : 'rgba(239, 68, 68, 0.05)'};
+  border: 1px solid ${props => props.$isCorrect ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)'};
   border-radius: 12px;
 `;
 
 const FeedbackTitle = styled.h3`
-  color: ${props => props.isCorrect ? '#22c55e' : '#ef4444'};
+  color: ${props => props.$isCorrect ? '#22c55e' : '#ef4444'};
   margin-bottom: 10px;
   font-size: 18px;
   font-weight: 600;
@@ -273,23 +273,51 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(quizConfig.timeLimit);
   const [isQuizComplete, setIsQuizComplete] = useState(false);
+  
+  // Ref to track timer
+  const timerRef = useRef(null);
 
   // Initialize quiz when component mounts
   useEffect(() => {
     const randomQuestions = getRandomQuestions(quizConfig.questionsPerQuiz);
     setQuestions(randomQuestions);
     updateQuizProgress({ totalQuestions: randomQuestions.length });
-  }, [updateQuizProgress]);
+  }, []); // Empty dependency array - only run once
 
   // Timer countdown
   useEffect(() => {
-    if (timeLeft > 0 && !isQuizComplete) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeLeft === 0 && !isQuizComplete) {
-      handleQuizComplete();
+    // Clear any existing timer
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
     }
-  }, [timeLeft, isQuizComplete]);
+    
+    if (timeLeft > 0 && !isQuizComplete) {
+      timerRef.current = setTimeout(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    } else if (timeLeft === 0 && !isQuizComplete) {
+      // Handle quiz completion
+      setIsQuizComplete(true);
+      const finalScore = selectedAnswer === questions[currentQuestionIndex]?.correctAnswer 
+        ? score + 1 
+        : score;
+      
+      updateQuizProgress({
+        score: finalScore,
+        isComplete: true,
+        currentQuestion: currentQuestionIndex
+      });
+      
+      onComplete();
+    }
+    
+    // Cleanup function
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [timeLeft, isQuizComplete]); // Minimal dependencies
 
   // Handle answer selection
   const handleAnswerSelect = (answerIndex) => {
@@ -319,24 +347,20 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
       setSelectedAnswer(null);
       setShowAnswer(false);
     } else {
-      handleQuizComplete();
+      // Handle quiz completion directly
+      setIsQuizComplete(true);
+      const finalScore = selectedAnswer === questions[currentQuestionIndex]?.correctAnswer 
+        ? score + 1 
+        : score;
+      
+      updateQuizProgress({
+        score: finalScore,
+        isComplete: true,
+        currentQuestion: currentQuestionIndex
+      });
+      
+      onComplete();
     }
-  };
-
-  // Handle quiz completion
-  const handleQuizComplete = () => {
-    setIsQuizComplete(true);
-    const finalScore = selectedAnswer === questions[currentQuestionIndex]?.correctAnswer 
-      ? score + 1 
-      : score;
-    
-    updateQuizProgress({
-      score: finalScore,
-      isComplete: true,
-      currentQuestion: currentQuestionIndex
-    });
-    
-    onComplete();
   };
 
   // Format time display
@@ -394,10 +418,10 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
           <QuestionText>{currentQuestion.question}</QuestionText>
           
           <QuestionMeta>
-            <MetaTag difficulty={currentQuestion.difficulty}>
+            <MetaTag $difficulty={currentQuestion.difficulty}>
               {currentQuestion.difficulty}
             </MetaTag>
-            <MetaTag difficulty="category">
+            <MetaTag $difficulty="category">
               {currentQuestion.category}
             </MetaTag>
           </QuestionMeta>
@@ -408,9 +432,9 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
               <OptionButton
                 key={index}
                 onClick={() => handleAnswerSelect(index)}
-                isSelected={selectedAnswer === index}
-                isCorrect={index === currentQuestion.correctAnswer}
-                showAnswer={showAnswer}
+                $isSelected={selectedAnswer === index}
+                $isCorrect={index === currentQuestion.correctAnswer}
+                $showAnswer={showAnswer}
                 whileHover={!showAnswer ? { scale: 1.02 } : {}}
                 whileTap={!showAnswer ? { scale: 0.98 } : {}}
               >
@@ -423,12 +447,12 @@ function QuizInterface({ quizData, updateQuizProgress, onComplete }) {
           {/* Feedback */}
           {showAnswer && (
             <FeedbackContainer
-              isCorrect={selectedAnswer === currentQuestion.correctAnswer}
+              $isCorrect={selectedAnswer === currentQuestion.correctAnswer}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <FeedbackTitle isCorrect={selectedAnswer === currentQuestion.correctAnswer}>
+              <FeedbackTitle $isCorrect={selectedAnswer === currentQuestion.correctAnswer}>
                 {selectedAnswer === currentQuestion.correctAnswer ? '✅ Correct!' : '❌ Incorrect'}
               </FeedbackTitle>
               <FeedbackText>{currentQuestion.explanation}</FeedbackText>
