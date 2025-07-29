@@ -10,28 +10,41 @@
   box-sizing: border-box;
 }
 
-/* Root variables for consistent theming */
+/* Root variables for consistent theming - CUSTOMIZE THESE TO MATCH YOUR WEBFLOW SITE */
 :root {
-  --primary-color: #667eea;
+  /* Primary Colors - Update these to match your Webflow site */
+  --primary-color: #667eea;           /* Main brand color */
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --secondary-color: #764ba2;
-  --success-color: #22c55e;
-  --error-color: #ef4444;
-  --warning-color: #f59e0b;
-  --info-color: #3b82f6;
-  --text-primary: #333;
-  --text-secondary: #666;
-  --text-light: #999;
-  --background-primary: #ffffff;
-  --background-secondary: rgba(255, 255, 255, 0.95);
-  --border-color: rgba(102, 126, 234, 0.2);
+  --secondary-color: #764ba2;         /* Secondary brand color */
+  
+  /* Status Colors */
+  --success-color: #22c55e;           /* Green for correct answers */
+  --error-color: #ef4444;             /* Red for incorrect answers */
+  --warning-color: #f59e0b;           /* Orange for warnings */
+  --info-color: #3b82f6;              /* Blue for info */
+  
+  /* Text Colors */
+  --text-primary: #333;               /* Main text color */
+  --text-secondary: #666;             /* Secondary text color */
+  --text-light: #999;                 /* Light text color */
+  
+  /* Background Colors */
+  --background-primary: #ffffff;      /* Main background */
+  --background-secondary: rgba(255, 255, 255, 0.95); /* Card backgrounds */
+  --border-color: rgba(102, 126, 234, 0.2); /* Border color */
+  
+  /* Shadows */
   --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.05);
   --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.1);
   --shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  /* Border Radius */
   --border-radius-small: 6px;
   --border-radius-medium: 8px;
   --border-radius-large: 12px;
   --border-radius-xl: 16px;
+  
+  /* Transitions */
   --transition-fast: 0.2s ease;
   --transition-medium: 0.3s ease;
   --transition-slow: 0.5s ease;
