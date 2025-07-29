@@ -12,42 +12,24 @@
 
 /* Root variables for consistent theming - MATCHING HOBBIES APP COLOR SCHEME */
 :root {
-  /* Primary Colors - Matching your hobbies app */
-  --primary-color: #D1A980;           /* Warm beige accent */
-  --primary-gradient: linear-gradient(135deg, #D1A980 0%, #B8946A 100%);
-  --secondary-color: #748873;         /* Sage green */
+  /* PRIMARY COLORS - Matched to dantemunoz.webflow.io */
+  --primary-color: #3B82F6; /* A vibrant blue from your site */
+  --primary-gradient: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+  --secondary-color: #1E40AF; /* A darker, professional blue */
   
-  /* Status Colors */
-  --success-color: #90A08F;           /* Light sage for correct answers */
-  --error-color: #E8B4B4;             /* Soft red for incorrect answers */
-  --warning-color: #D1A980;           /* Warm beige for warnings */
-  --info-color: #748873;              /* Sage green for info */
+  /* TEXT COLORS - Aligned with your site's typography */
+  --text-primary: #1F2937; /* Dark gray for main text */
+  --text-secondary: #6B7280; /* Lighter gray for secondary text */
   
-  /* Text Colors - Matching your hobbies app */
-  --text-primary: #F8F8F8;            /* Off-white main text */
-  --text-secondary: #90A08F;          /* Light sage secondary text */
-  --text-light: #B8946A;              /* Light beige for subtle text */
-  
-  /* Background Colors - Matching your hobbies app */
-  --background-primary: #3C4B3B;      /* Dark green main background */
-  --background-secondary: #5A6B59;    /* Medium green card backgrounds */
-  --border-color: #748873;            /* Sage green border */
-  
-  /* Shadows */
-  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.15);
-  --shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.2);
-  
-  /* Border Radius */
+  /* BACKGROUND COLORS */
+  --background-primary: #F7FAFC; /* A very light gray, almost white */
+  --border-color: rgba(59, 130, 246, 0.2); /* Soft blue for borders */
+
+  /* BORDER RADIUS - Match to your site's style */
   --border-radius-small: 6px;
   --border-radius-medium: 8px;
   --border-radius-large: 12px;
   --border-radius-xl: 16px;
-  
-  /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-medium: 0.3s ease;
-  --transition-slow: 0.5s ease;
 }
 
 /* Base HTML and Body Styles */
@@ -477,11 +459,12 @@ html, body {
   background: var(--primary-color);
 }
 
-/* Optimized iframe layout - full functionality */
+/* MVP iframe layout - compact and functional */
 .AppContainer {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 8px;
 }
 
 .MainContent {
@@ -489,29 +472,46 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  padding: 8px;
 }
 
-/* Compact layout for smaller iframes */
-@media (max-height: 600px) {
+.Header {
+  padding: 8px 12px;
+  margin-bottom: 8px;
+}
+
+.Header h1 {
+  font-size: 1.3rem;
+  margin: 0 0 4px 0;
+}
+
+.Header p {
+  font-size: 0.85rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Compact layout for MVP iframe */
+@media (max-height: 500px) {
   .AppContainer {
-    padding: 8px;
+    padding: 4px;
   }
   
   .MainContent {
-    padding: 8px;
+    padding: 4px;
   }
   
   .Header {
-    padding: 8px 16px;
+    padding: 6px 8px;
+    margin-bottom: 6px;
   }
   
   .Header h1 {
-    font-size: 1.4rem;
-    margin: 0;
+    font-size: 1.1rem;
+    margin: 0 0 2px 0;
   }
   
   .Header p {
-    font-size: 0.85rem;
-    margin: 4px 0 0 0;
+    font-size: 0.75rem;
   }
 }
