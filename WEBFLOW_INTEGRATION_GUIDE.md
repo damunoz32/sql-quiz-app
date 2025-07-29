@@ -259,15 +259,15 @@ The app is already responsive, but you can adjust the iframe height:
 
 ## 🎨 **Premium Visual Enhancement**
 
-### **Premium Glass Morphism Embed (Matches Your Website)**
+### **Stunning Gradient Embed with Full Functionality**
 
 ```html
-<!-- Premium SQL Quiz App Embed -->
-<div class="sql-quiz-premium-wrapper">
-  <div class="sql-quiz-premium-container">
+<!-- Stunning SQL Quiz App Embed -->
+<div class="sql-quiz-stunning-wrapper">
+  <div class="sql-quiz-stunning-container">
     <div class="sql-quiz-header">
       <div class="sql-quiz-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 7V4C4 3.44772 4.44772 3 5 3H19C19.5523 3 20 3.44772 20 4V7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           <path d="M4 7V20C4 20.5523 4.44772 21 5 21H19C19.5523 21 20 20.5523 20 20V7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           <path d="M8 11H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -276,209 +276,299 @@ The app is already responsive, but you can adjust the iframe height:
       </div>
       <div class="sql-quiz-title">
         <h3>SQL Quiz Master</h3>
-        <p>Interactive Database Query Practice</p>
+        <p>Master database queries through interactive challenges</p>
       </div>
+      <div class="sql-quiz-badge">Live Demo</div>
     </div>
     
     <div class="sql-quiz-iframe-container">
       <iframe 
-        id="sql-quiz-premium-iframe"
+        id="sql-quiz-stunning-iframe"
         src="https://damunoz32.github.io/sql-quiz-app" 
         width="100%" 
-        height="600px" 
+        height="800px" 
         frameborder="0" 
-        scrolling="no"
+        scrolling="auto"
         title="SQL Quiz Master"
       ></iframe>
+    </div>
+    
+    <div class="sql-quiz-footer">
+      <div class="tech-stack">
+        <span class="tech-item">React</span>
+        <span class="tech-item">SQL</span>
+        <span class="tech-item">JavaScript</span>
+        <span class="tech-item">Interactive</span>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
-.sql-quiz-premium-wrapper {
-  padding: 30px 20px;
-  background: #f8f9fa;
-  border-radius: 16px;
-  margin: 30px 0;
-  border: 1px solid #e9ecef;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+.sql-quiz-stunning-wrapper {
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  border-radius: 20px;
+  margin: 40px 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
 }
 
-.sql-quiz-premium-container {
-  background: white;
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f1f3f4;
+.sql-quiz-stunning-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
+}
+
+.sql-quiz-stunning-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 30px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
 }
 
 .sql-quiz-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #f1f3f4;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+  position: relative;
 }
 
 .sql-quiz-icon {
-  background: #667eea;
-  border-radius: 8px;
-  padding: 8px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 12px;
+  padding: 12px;
   color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .sql-quiz-title h3 {
   color: #333;
   margin: 0;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   font-family: 'Jost', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .sql-quiz-title p {
   color: #666;
-  margin: 4px 0 0 0;
+  margin: 5px 0 0 0;
   font-size: 14px;
   font-family: 'Afacad Flux', sans-serif;
 }
 
-.sql-quiz-iframe-container {
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid #e9ecef;
+.sql-quiz-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
 }
 
-#sql-quiz-premium-iframe {
+.sql-quiz-iframe-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  margin-bottom: 20px;
+}
+
+#sql-quiz-stunning-iframe {
   border: none;
   background: white;
   transition: all 0.3s ease;
+  display: block;
 }
 
-/* Responsive Design - No Scrolling */
+.sql-quiz-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.tech-stack {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tech-item {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive Design - Full Functionality */
 @media (max-width: 1024px) {
-  .sql-quiz-premium-wrapper {
-    padding: 20px 15px;
-    margin: 20px 0;
+  .sql-quiz-stunning-wrapper {
+    padding: 30px 15px;
+    margin: 30px 0;
   }
   
-  .sql-quiz-premium-container {
-    padding: 20px;
+  .sql-quiz-stunning-container {
+    padding: 25px;
   }
   
-  #sql-quiz-premium-iframe {
-    height: 550px !important;
+  #sql-quiz-stunning-iframe {
+    height: 700px !important;
   }
 }
 
 @media (max-width: 768px) {
-  .sql-quiz-premium-wrapper {
-    padding: 15px 10px;
-    margin: 15px 0;
+  .sql-quiz-stunning-wrapper {
+    padding: 20px 10px;
+    margin: 20px 0;
   }
   
-  .sql-quiz-premium-container {
-    padding: 15px;
+  .sql-quiz-stunning-container {
+    padding: 20px;
   }
   
   .sql-quiz-header {
     flex-direction: column;
     text-align: center;
-    gap: 8px;
+    gap: 10px;
   }
   
-  #sql-quiz-premium-iframe {
+  .sql-quiz-badge {
+    position: static;
+    align-self: center;
+  }
+  
+  #sql-quiz-stunning-iframe {
+    height: 600px !important;
+  }
+  
+  .sql-quiz-title h3 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sql-quiz-stunning-wrapper {
+    padding: 15px 5px;
+  }
+  
+  .sql-quiz-stunning-container {
+    padding: 15px;
+  }
+  
+  #sql-quiz-stunning-iframe {
     height: 500px !important;
   }
   
   .sql-quiz-title h3 {
     font-size: 18px;
   }
-}
-
-@media (max-width: 480px) {
-  .sql-quiz-premium-wrapper {
-    padding: 10px 5px;
+  
+  .tech-stack {
+    gap: 8px;
   }
   
-  .sql-quiz-premium-container {
-    padding: 12px;
-  }
-  
-  #sql-quiz-premium-iframe {
-    height: 450px !important;
-  }
-  
-  .sql-quiz-title h3 {
-    font-size: 16px;
+  .tech-item {
+    padding: 6px 12px;
+    font-size: 11px;
   }
 }
 </style>
 
 <script>
-// Responsive iframe management - No scrolling
+// Enhanced responsive iframe management with full functionality
 (function() {
-  const iframe = document.getElementById('sql-quiz-premium-iframe');
+  const iframe = document.getElementById('sql-quiz-stunning-iframe');
   
   function setResponsiveHeight() {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     
-    // Calculate available height (accounting for header, padding, margins)
-    const availableHeight = viewportHeight - 200; // Reserve space for other content
+    // Calculate available height (more generous for full functionality)
+    const availableHeight = viewportHeight - 150; // Less reserved space
     
     if (viewportWidth <= 480px) {
-      iframe.style.height = Math.min(450, availableHeight) + 'px';
-    } else if (viewportWidth <= 768) {
       iframe.style.height = Math.min(500, availableHeight) + 'px';
-    } else if (viewportWidth <= 1024) {
-      iframe.style.height = Math.min(550, availableHeight) + 'px';
-    } else {
+    } else if (viewportWidth <= 768) {
       iframe.style.height = Math.min(600, availableHeight) + 'px';
+    } else if (viewportWidth <= 1024) {
+      iframe.style.height = Math.min(700, availableHeight) + 'px';
+    } else {
+      iframe.style.height = Math.min(800, availableHeight) + 'px';
     }
   }
   
   setResponsiveHeight();
   window.addEventListener('resize', setResponsiveHeight);
   
-  // Smooth loading animation
+  // Enhanced loading animation
   iframe.onload = function() {
     iframe.style.opacity = '1';
     iframe.style.transform = 'scale(1)';
   };
   
   // Initial loading state
-  iframe.style.opacity = '0.95';
-  iframe.style.transform = 'scale(0.99)';
-  iframe.style.transition = 'all 0.3s ease';
+  iframe.style.opacity = '0.9';
+  iframe.style.transform = 'scale(0.98)';
+  iframe.style.transition = 'all 0.4s ease';
 })();
 </script>
 
 ## 🎯 **Key Features:**
 
-✅ **Matches your website's clean, professional aesthetic**  
-✅ **No scrolling required** - fits perfectly on viewport  
-✅ **Responsive design** across all devices  
-✅ **Smooth loading animations**  
-✅ **Clean, organized code**  
-✅ **Professional typography** matching your fonts  
-✅ **Subtle shadows and borders**  
+✅ **Stunning gradient background** with glass morphism effects  
+✅ **Full app functionality** - no height restrictions  
+✅ **Professional typography** with gradient text effects  
+✅ **Interactive tech stack badges** with hover effects  
+✅ **Live Demo badge** for credibility  
+✅ **Responsive design** that works on all devices  
+✅ **Smooth animations** and loading states  
+✅ **Beautiful shadows** and depth effects  
 
 ## 🚀 **Implementation:**
 
-1. **Copy the code above**
+1. **Copy the stunning code above**
 2. **Replace your current embed** in Webflow
-3. **Test on different devices** - no scrolling needed!
-4. **Publish and enjoy** your enhanced SQL quiz!
+3. **Test the full functionality** - all features accessible!
+4. **Publish and enjoy** your impressive SQL quiz!
 
-## 🎨 **Color Scheme:**
+## 🎨 **Visual Highlights:**
 
-This design uses a clean, professional color palette that matches your website:
-- **Background:** Light gray (#f8f9fa) 
-- **Container:** White with subtle borders
-- **Accent:** Blue (#667eea) for the icon
-- **Text:** Dark gray (#333) for headings, medium gray (#666) for descriptions
-- **Borders:** Light gray (#e9ecef, #f1f3f4)
+- **Gradient background:** Purple to blue to pink
+- **Glass morphism container** with backdrop blur
+- **Gradient text** for the title
+- **Interactive tech badges** with hover effects
+- **Professional shadows** and depth
+- **Subtle texture overlay** for visual interest
 
 ## 🎯 **Quick Enhancement Tips**
 

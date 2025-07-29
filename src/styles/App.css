@@ -477,40 +477,41 @@ html, body {
   background: var(--primary-color);
 }
 
-/* Iframe height optimization */
+/* Optimized iframe layout - full functionality */
 .AppContainer {
   min-height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .MainContent {
-  max-height: calc(100vh - 120px);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
 }
 
-/* Compact layout for iframe */
+/* Compact layout for smaller iframes */
 @media (max-height: 600px) {
   .AppContainer {
-    padding: 10px;
+    padding: 8px;
   }
   
   .MainContent {
-    padding: 10px;
-    max-height: calc(100vh - 80px);
+    padding: 8px;
   }
   
   .Header {
-    padding: 10px 20px;
+    padding: 8px 16px;
   }
   
   .Header h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin: 0;
   }
   
   .Header p {
-    font-size: 0.9rem;
-    margin: 5px 0 0 0;
+    font-size: 0.85rem;
+    margin: 4px 0 0 0;
   }
 }
