@@ -7,6 +7,7 @@ import QuizInterface from './components/QuizInterface';
 import DatabaseViewer from './components/DatabaseViewer';
 import Navigation from './components/Navigation';
 import ErrorBoundary from './components/ErrorBoundary';
+import QuestionGenerator from './components/QuestionGenerator';
 import './styles/App.css';
 
 // Main app container
@@ -101,21 +102,6 @@ const SectionSubtitle = styled.p`
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-`;
-
-// Grid container
-const GridContainer = styled.div`
-  display: grid;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-2xl);
-  
-  &.grid-2 {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  }
-  
-  &.grid-3 {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
 `;
 
 // Results component
@@ -258,6 +244,12 @@ function App() {
     setCurrentView('quiz');
   };
 
+  const handleQuestionsGenerated = (newQuestions) => {
+    // Here you could save the generated questions to your quiz database
+    console.log('New questions generated:', newQuestions);
+    // For now, we'll just log them. In a real app, you'd save them to your question database
+  };
+
   const sendHeightToParent = () => {
     try {
       const height = document.body.scrollHeight;
@@ -315,6 +307,16 @@ function App() {
               Explore the sample database schema, run SQL queries, and learn from example queries.
             </SectionSubtitle>
             <DatabaseViewer />
+          </ContentSection>
+        );
+      case 'generator':
+        return (
+          <ContentSection>
+            <SectionTitle>AI Question Generator</SectionTitle>
+            <SectionSubtitle>
+              Generate new SQL quiz questions using our AI-powered system. Create custom questions or use templates.
+            </SectionSubtitle>
+            <QuestionGenerator onQuestionsGenerated={handleQuestionsGenerated} />
           </ContentSection>
         );
       case 'results':
